@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mi Bienestar 🌿 – Tu guía de alimentación</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   VARIABLES Y RESET
+   ============================================= */
+:root {
+  --verde: #4CAF7D;
+  --verde-oscuro: #2E7D52;
+  --verde-claro: #E8F5EE;
+  --verde-menta: #A8E6C3;
+  --naranja: #FF8C5A;
+  --naranja-claro: #FFF0E8;
+  --azul: #5B9BD5;
+  --azul-claro: #EBF3FB;
+  --amarillo: #FFD166;
+  --amarillo-claro: #FFFBEE;
+  --rojo-suave: #FF6B6B;
+  --crema: #FDF8F3;
+  --blanco: #FFFFFF;
+  --gris-texto: #3D3D3D;
+  --gris-suave: #F5F5F5;
+  --gris-medio: #9E9E9E;
+  --sombra: 0 4px 20px rgba(0,0,0,0.08);
+  --sombra-hover: 0 8px 30px rgba(0,0,0,0.14);
+  --radio: 20px;
+  --radio-btn: 50px;
+  --fuente-titulo: 'Lora', serif;
+  --fuente-cuerpo: 'Nunito', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { font-size: 18px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--fuente-cuerpo);
+  background: var(--crema);
+  color: var(--gris-texto);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   PANTALLA DE BIENVENIDA
+   ============================================= */
+#welcome-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, #2E7D52 0%, #4CAF7D 50%, #A8E6C3 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40px 30px;
+  text-align: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#welcome-screen.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.welcome-emoji {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.welcome-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.welcome-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.welcome-nombre {
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  color: #fff;
+  width: 100%;
+  margin-bottom: 20px;
+  outline: none;
+  font-family: var(--fuente-cuerpo);
+  text-align: center;
+}
+
+.welcome-nombre::placeholder { color: rgba(255,255,255,0.7); }
+
+.btn-bienvenida {
+  background: #fff;
+  color: var(--verde-oscuro);
+  border: none;
+  border-radius: 50px;
+  padding: 18px 40px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.btn-bienvenida:active { transform: scale(0.97); }
+
+.welcome-disclaimer {
+  margin-top: 24px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+  background: rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+/* =============================================
+   ESTRUCTURA PRINCIPAL
+   ============================================= */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 90px;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.app-header {
+  background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
+  color: #fff;
+  padding: 20px 24px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0; right: 0;
+  height: 40px;
+  background: var(--crema);
+  border-radius: 30px 30px 0 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.header-saludo {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.header-nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.header-fecha {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  margin-top: 2px;
+}
+
+.header-avatar {
+  width: 52px;
+  height: 52px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border: 2px solid rgba(255,255,255,0.4);
+}
+
+/* =============================================
+   SECCIONES / PÁGINAS
+   ============================================= */
+.page {
+  display: none;
+  padding: 0 16px 20px;
+  animation: paginaEntrar 0.3s ease;
+}
+
+.page.active { display: block; }
+
+@keyframes paginaEntrar {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.card {
+  background: #fff;
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--sombra);
+  transition: box-shadow 0.2s;
+}
+
+.card:active { box-shadow: var(--sombra-hover); }
+
+.card-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--verde-oscuro);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-sub {
+  font-size: 0.9rem;
+  color: var(--gris-medio);
+  margin-bottom: 14px;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  text-align: center;
+}
+
+.btn:active { transform: scale(0.95); }
+
+.btn-verde {
+  background: var(--verde);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(76,175,125,0.35);
+}
+
+.btn-verde:hover { background: var(--verde-oscuro); }
+
+.btn-naranja {
+  background: var(--naranja);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255,140,90,0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--verde);
+  border: 2px solid var(--verde);
+}
+
+.btn-gris {
+  background: var(--gris-suave);
+  color: var(--gris-texto);
+}
+
+.btn-full { width: 100%; }
+
+.btn-sm { padding: 10px 16px; font-size: 0.9rem; }
+
+/* =============================================
+   NAVEGACIÓN INFERIOR
+   ============================================= */
+.nav-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 16px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 16px;
+  transition: background 0.2s;
+  border: none;
+  background: transparent;
+  font-family: var(--fuente-cuerpo);
+  min-width: 60px;
+}
+
+.nav-item.active .nav-icon {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+}
+
+.nav-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.nav-item.active .nav-icon { transform: scale(1.1); }
+
+.nav-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gris-medio);
+  transition: color 0.2s;
+}
+
+.nav-item.active .nav-label { color: var(--verde-oscuro); }
+
+/* =============================================
+   ASISTENTE / MENSAJES
+   ============================================= */
+.asistente-card {
+  background: linear-gradient(135deg, var(--verde-claro), #fff);
+  border: 2px solid var(--verde-menta);
+  border-radius: var(--radio);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.asistente-icono {
+  font-size: 36px;
+  flex-shrink: 0;
+  animation: flotar 4s ease-in-out infinite;
+}
+
+.asistente-texto {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--verde-oscuro);
+  font-weight: 600;
+}
+
+/* =============================================
+   INDICADORES DE SALUD
+   ============================================= */
+.indicadores-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.indicador-item {
+  background: var(--gris-suave);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.indicador-icono { font-size: 24px; margin-bottom: 4px; }
+
+.indicador-label {
+  font-size: 0.78rem;
+  color: var(--gris-medio);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.indicador-valor {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--verde-oscuro);
+  margin-top: 2px;
+}
+
+.barra-wrap { margin: 16px 0; }
+
+.barra-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+}
+
+.barra-fondo {
+  height: 12px;
+  background: var(--gris-suave);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.barra-relleno {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--verde), var(--verde-oscuro));
+  transition: width 1s ease;
+  width: 0;
+}
+
+/* =============================================
+   CALENDARIO SEMANAL
+   ============================================= */
+.dia-card {
+  background: #fff;
+  border-radius: var(--radio);
+  margin-bottom: 12px;
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.dia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.dia-header:active { background: var(--gris-suave); }
+
+.dia-info { display: flex; align-items: center; gap: 12px; }
+
+.dia-numero {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--verde-claro);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--verde-oscuro);
+  flex-shrink: 0;
+}
+
+.dia-numero span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--verde);
+}
+
+.dia-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gris-texto);
+}
+
+.dia-resumen {
+  font-size: 0.85rem;
+  color: var(--gris-medio);
+  margin-top: 2px;
+}
+
+.dia-toggle {
+  font-size: 1.4rem;
+  color: var(--gris-medio);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.dia-toggle.abierto { transform: rotate(180deg); }
+
+.dia-contenido {
+  display: none;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.dia-contenido.visible { display: block; }
+
+.comida-slot {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.comida-slot:last-child { border-bottom: none; }
+
+.comida-tipo {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--verde);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comida-nombre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+}
+
+.comida-desc {
+  font-size: 0.88rem;
+  color: var(--gris-medio);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.comida-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.tag.naranja { background: var(--naranja-claro); color: #c05a2a; }
+.tag.azul { background: var(--azul-claro); color: #2a5a8a; }
+.tag.amarillo { background: var(--amarillo-claro); color: #7a5a00; }
+
+.comida-acciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* =============================================
+   RECETA MODAL
+   ============================================= */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  backdrop-filter: blur(3px);
+}
+
+#modal-overlay.visible { display: flex; }
+
+.modal-sheet {
+  background: #fff;
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 24px 40px;
+  animation: sheetEntrar 0.3s ease;
+}
+
+@keyframes sheetEntrar {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-handle {
+  width: 40px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+.modal-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.4rem;
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+}
+
+.modal-tipo {
+  font-size: 0.85rem;
+  color: var(--verde);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.receta-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.receta-info-item {
+  background: var(--gris-suave);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.receta-info-item .icon { font-size: 22px; }
+.receta-info-item .label { font-size: 0.75rem; color: var(--gris-medio); font-weight: 700; }
+.receta-info-item .valor { font-size: 0.95rem; font-weight: 800; color: var(--gris-texto); }
+
+.receta-seccion {
+  margin-bottom: 20px;
+}
+
+.receta-seccion-titulo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--verde-oscuro);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ingrediente-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 1rem;
+}
+
+.ingrediente-item:last-child { border-bottom: none; }
+
+.paso-item {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.paso-item:last-child { border-bottom: none; }
+
+.paso-num {
+  width: 30px;
+  height: 30px;
+  background: var(--verde);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.paso-texto { font-size: 0.98rem; line-height: 1.5; padding-top: 4px; }
+
+/* =============================================
+   LISTA DE MERCADO
+   ============================================= */
+.mercado-categoria {
+  margin-bottom: 20px;
+}
+
+.categoria-titulo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--gris-texto);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.mercado-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.mercado-item.comprado {
+  background: var(--verde-claro);
+  border-color: var(--verde-menta);
+}
+
+.mercado-item.comprado .mercado-nombre {
+  text-decoration: line-through;
+  color: var(--gris-medio);
+}
+
+.mercado-check {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 2.5px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 14px;
+  color: #fff;
+}
+
+.mercado-item.comprado .mercado-check {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+.mercado-nombre { font-size: 1rem; font-weight: 600; }
+
+.mercado-detalle {
+  font-size: 0.82rem;
+  color: var(--gris-medio);
+  margin-top: 1px;
+}
+
+/* =============================================
+   HÁBITOS
+   ============================================= */
+.habito-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  background: #fff;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: all 0.25s;
+  border: 2px solid transparent;
+}
+
+.habito-item.completado {
+  background: var(--verde-claro);
+  border-color: var(--verde-menta);
+  transform: scale(1.01);
+}
+
+.habito-icono {
+  font-size: 30px;
+  width: 52px;
+  height: 52px;
+  background: var(--gris-suave);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.habito-item.completado .habito-icono { background: rgba(255,255,255,0.5); }
+
+.habito-info { flex: 1; }
+
+.habito-nombre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gris-texto);
+}
+
+.habito-desc {
+  font-size: 0.85rem;
+  color: var(--gris-medio);
+  margin-top: 2px;
+}
+
+.habito-check {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2.5px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.habito-item.completado .habito-check {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+/* =============================================
+   CONSEJOS
+   ============================================= */
+.consejo-card {
+  background: #fff;
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--sombra);
+  border-left: 5px solid var(--verde);
+}
+
+.consejo-card.naranja { border-left-color: var(--naranja); }
+.consejo-card.azul { border-left-color: var(--azul); }
+.consejo-card.amarillo { border-left-color: var(--amarillo); }
+
+.consejo-icono { font-size: 32px; margin-bottom: 8px; }
+
+.consejo-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+}
+
+.consejo-texto {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* =============================================
+   TOAST / NOTIFICACIÓN
+   ============================================= */
+#toast {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--verde-oscuro);
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  text-align: center;
+  max-width: 320px;
+  width: calc(100% - 40px);
+}
+
+#toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =============================================
+   FAVORITOS
+   ============================================= */
+.fav-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s;
+  line-height: 1;
+}
+
+.fav-btn:active { transform: scale(1.3); }
+
+/* =============================================
+   PROGRESO DEL DÍA
+   ============================================= */
+.progreso-wrap {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.progreso-circulo {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 14px;
+  position: relative;
+}
+
+.progreso-circulo svg {
+  transform: rotate(-90deg);
+  width: 110px;
+  height: 110px;
+}
+
+.progreso-circulo circle {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.progreso-fondo { stroke: #eee; }
+.progreso-relleno { stroke: var(--verde); transition: stroke-dashoffset 1s ease; }
+
+.progreso-centro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progreso-porcentaje {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--verde-oscuro);
+}
+
+.progreso-etiqueta {
+  font-size: 0.72rem;
+  color: var(--gris-medio);
+  font-weight: 700;
+}
+
+/* =============================================
+   SECCIÓN TÍTULO
+   ============================================= */
+.seccion-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gris-texto);
+  margin: 20px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =============================================
+   BADGES
+   ============================================= */
+.badge {
+  background: var(--verde);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* =============================================
+   GRID COMIDA RÁPIDA
+   ============================================= */
+.comidas-rapidas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.comida-rapida-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.comida-rapida-item:active { transform: scale(0.97); box-shadow: var(--sombra-hover); }
+
+.comida-rapida-icono { font-size: 32px; margin-bottom: 6px; }
+
+.comida-rapida-nombre {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gris-texto);
+}
+
+.comida-rapida-tiempo {
+  font-size: 0.78rem;
+  color: var(--verde);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* =============================================
+   DISCLAIMER
+   ============================================= */
+.disclaimer {
+  background: var(--amarillo-claro);
+  border: 2px solid var(--amarillo);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  color: #7a5a00;
+  line-height: 1.5;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* =============================================
+   CONFIGURACION
+   ============================================= */
+.config-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.config-item:last-child { border-bottom: none; }
+
+.config-label { font-size: 1rem; font-weight: 600; }
+.config-sub { font-size: 0.82rem; color: var(--gris-medio); margin-top: 2px; }
+
+/* Toggle switch */
+.toggle {
+  width: 54px;
+  height: 30px;
+  background: #ddd;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+  flex-shrink: 0;
+  border: none;
+}
+
+.toggle.on { background: var(--verde); }
+
+.toggle::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.toggle.on::after { transform: translateX(24px); }
+
+/* =============================================
+   RESPONSIVE EXTRA
+   ============================================= */
+@media (max-width: 380px) {
+  html { font-size: 16px; }
+  .comidas-rapidas-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* =============================================
+   ANIMACIONES EXTRA
+   ============================================= */
+@keyframes bounce-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.bounce-in { animation: bounce-in 0.4s ease; }
+
+@keyframes pulse-verde {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,125,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(76,175,125,0); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- =============================================
+     PANTALLA DE BIENVENIDA
+     ============================================= -->
+<div id="welcome-screen">
+  <div class="welcome-emoji">🌿</div>
+  <h1 class="welcome-titulo">¡Hola! Bienvenida<br>a Mi Bienestar</h1>
+  <p class="welcome-sub">Tu acompañante diario para<br>comer bien y sentirte mejor 💚</p>
+  <input type="text" class="welcome-nombre" id="input-nombre" placeholder="¿Cuál es tu nombre?" maxlength="20">
+  <button class="btn btn-bienvenida" onclick="iniciarApp()">
+    ¡Empecemos juntas! 🌸
+  </button>
+  <p class="welcome-disclaimer">
+    ⚕️ <strong>Aviso importante:</strong> Esta aplicación es una guía de hábitos saludables. <strong>No reemplaza la atención médica profesional.</strong> Consulta siempre con tu médico.
+  </p>
+</div>
+
+<!-- =============================================
+     APP PRINCIPAL
+     ============================================= -->
+<div id="app" style="display:none;">
+
+  <!-- HEADER -->
+  <div class="app-header">
+    <div class="header-top">
+      <div>
+        <div class="header-saludo" id="header-saludo">Buenos días ☀️</div>
+        <div class="header-nombre" id="header-nombre">Mi Bienestar</div>
+        <div class="header-fecha" id="header-fecha"></div>
+      </div>
+      <div class="header-avatar">👩</div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       PÁGINA 1: INICIO / DASHBOARD
+       ============================================= -->
+  <div class="page active" id="page-inicio">
+
+    <!-- Asistente -->
+    <div class="asistente-card" id="asistente-mensaje">
+      <span class="asistente-icono">🌿</span>
+      <span class="asistente-texto" id="asistente-texto">Cargando...</span>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <span>⚕️</span>
+      <span><strong>Recuerda:</strong> Esta guía no reemplaza la atención médica. Consulta siempre con tu médico de confianza.</span>
+    </div>
+
+    <!-- Progreso del día -->
+    <div class="card">
+      <div class="card-titulo">📊 Tu progreso hoy</div>
+      <div class="card-sub" id="progreso-sub">¡Completa tus hábitos diarios!</div>
+      <div class="progreso-wrap">
+        <div class="progreso-circulo">
+          <svg viewBox="0 0 110 110">
+            <circle class="progreso-fondo" cx="55" cy="55" r="46"/>
+            <circle class="progreso-relleno" id="svg-progreso" cx="55" cy="55" r="46"
+              stroke-dasharray="289"
+              stroke-dashoffset="289"/>
+          </svg>
+          <div class="progreso-centro">
+            <div class="progreso-porcentaje" id="progreso-num">0%</div>
+            <div class="progreso-etiqueta">hábitos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicadores rápidos -->
+      <div class="indicadores-grid">
+        <div class="indicador-item">
+          <div class="indicador-icono">🥩</div>
+          <div class="indicador-label">Proteína</div>
+          <div class="indicador-valor">Alta ✅</div>
+        </div>
+        <div class="indicador-item">
+          <div class="indicador-icono">🌾</div>
+          <div class="indicador-label">Carbohidratos</div>
+          <div class="indicador-valor">Bajo ✅</div>
+        </div>
+        <div class="indicador-item">
+          <div class="indicador-icono">💧</div>
+          <div class="indicador-label">Hidratación</div>
+          <div class="indicador-valor" id="ind-agua">Pendiente</div>
+        </div>
+        <div class="indicador-item">
+          <div class="indicador-icono">🏃</div>
+          <div class="indicador-label">Movimiento</div>
+          <div class="indicador-valor" id="ind-caminar">Pendiente</div>
+        </div>
+      </div>
+
+      <!-- Barra de alimentación -->
+      <div class="barra-wrap">
+        <div class="barra-label">
+          <span>🥗 Alimentación balanceada</span>
+          <span style="color:var(--verde)">Muy buena</span>
+        </div>
+        <div class="barra-fondo">
+          <div class="barra-relleno" id="barra-alim" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comida de hoy -->
+    <div class="card">
+      <div class="card-titulo">🍽️ Tu menú de hoy</div>
+      <div class="card-sub" id="menu-hoy-dia"></div>
+
+      <div id="menu-hoy-contenido"></div>
+
+      <button class="btn btn-verde btn-full" style="margin-top:12px" onclick="irA('semana')">
+        📅 Ver plan completo de la semana
+      </button>
+    </div>
+
+    <!-- Comidas rápidas -->
+    <div class="seccion-titulo">⚡ Comidas rápidas y fáciles</div>
+    <div class="comidas-rapidas-grid" id="comidas-rapidas-grid"></div>
+
+    <!-- Favoritos -->
+    <div class="seccion-titulo" id="fav-titulo" style="display:none">❤️ Tus favoritos</div>
+    <div id="favoritos-lista"></div>
+
+  </div>
+
+  <!-- =============================================
+       PÁGINA 2: PLAN SEMANAL
+       ============================================= -->
+  <div class="page" id="page-semana">
+    <div class="seccion-titulo">🗓️ Tu plan de esta semana</div>
+
+    <div class="asistente-card">
+      <span class="asistente-icono">💡</span>
+      <span class="asistente-texto">Toca cada día para ver tus comidas. Puedes cambiar cualquier plato si no te gusta 🌸</span>
+    </div>
+
+    <div id="calendario-semana"></div>
+  </div>
+
+  <!-- =============================================
+       PÁGINA 3: MERCADO
+       ============================================= -->
+  <div class="page" id="page-mercado">
+    <div class="seccion-titulo">🛒 Tu lista de mercado</div>
+
+    <div class="asistente-card">
+      <span class="asistente-icono">🛍️</span>
+      <span class="asistente-texto">Todo lo que necesitas para la semana, organizado por categoría. ¡Marca lo que ya tienes! ✅</span>
+    </div>
+
+    <div class="card" style="padding:16px 20px">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div class="card-titulo">Lista completa</div>
+          <div class="card-sub" id="mercado-progreso">0 de 0 artículos</div>
+        </div>
+        <button class="btn btn-gris btn-sm" onclick="limpiarMercado()">🔄 Reiniciar</button>
+      </div>
+    </div>
+
+    <div id="mercado-contenido"></div>
+  </div>
+
+  <!-- =============================================
+       PÁGINA 4: HÁBITOS
+       ============================================= -->
+  <div class="page" id="page-habitos">
+    <div class="seccion-titulo">🧘 Mis hábitos de hoy</div>
+
+    <div class="asistente-card">
+      <span class="asistente-icono">🌟</span>
+      <span class="asistente-texto">Pequeños pasos, grandes cambios. ¡Toca cada hábito cuando lo completes! 💪</span>
+    </div>
+
+    <div id="habitos-lista"></div>
+
+    <div class="card" style="margin-top:16px; text-align:center;">
+      <div class="card-titulo" style="justify-content:center; margin-bottom:8px;">🏆 Tu racha de hoy</div>
+      <div style="font-size:2.5rem; margin:10px 0;" id="habitos-emoji-progreso">😐</div>
+      <div style="font-size:1rem; color:var(--gris-medio);" id="habitos-mensaje-progreso">¡Empieza completando tus hábitos!</div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       PÁGINA 5: CONSEJOS
+       ============================================= -->
+  <div class="page" id="page-consejos">
+    <div class="seccion-titulo">💡 Consejos para ti</div>
+
+    <div class="asistente-card">
+      <span class="asistente-icono">❤️</span>
+      <span class="asistente-texto">Información sencilla para cuidar tu salud. Recuerda siempre consultar con tu médico 🩺</span>
+    </div>
+
+    <div id="consejos-contenido"></div>
+
+    <!-- Configuración simple -->
+    <div class="seccion-titulo">⚙️ Configuración</div>
+    <div class="card">
+      <div class="config-item">
+        <div>
+          <div class="config-label">🔔 Recordatorios</div>
+          <div class="config-sub">Avisos para tomar agua y comer</div>
+        </div>
+        <button class="toggle on" id="toggle-recordatorios" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="config-item">
+        <div>
+          <div class="config-label">🔤 Letra grande</div>
+          <div class="config-sub">Texto más fácil de leer</div>
+        </div>
+        <button class="toggle on" id="toggle-letra" onclick="toggleLetraGrande()"></button>
+      </div>
+      <div class="config-item">
+        <div>
+          <div class="config-label">🎨 Modo suave</div>
+          <div class="config-sub">Colores más suaves para la vista</div>
+        </div>
+        <button class="toggle" id="toggle-suave" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="config-item" style="border:none; padding-top:20px;">
+        <button class="btn btn-outline btn-full" onclick="resetearApp()" style="font-size:0.9rem; color:#e55; border-color:#e55; width:100%;">
+          🔄 Empezar de nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <span>⚕️</span>
+      <span>Esta aplicación es solo una guía de hábitos. <strong>No reemplaza la consulta médica.</strong> Siempre habla con tu médico sobre tu salud.</span>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN INFERIOR -->
+  <nav class="nav-bottom">
+    <button class="nav-item active" onclick="irA('inicio')">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">Inicio</div>
+    </button>
+    <button class="nav-item" onclick="irA('semana')">
+      <div class="nav-icon">🗓️</div>
+      <div class="nav-label">Mi Semana</div>
+    </button>
+    <button class="nav-item" onclick="irA('mercado')">
+      <div class="nav-icon">🛒</div>
+      <div class="nav-label">Mercado</div>
+    </button>
+    <button class="nav-item" onclick="irA('habitos')">
+      <div class="nav-icon">🧘</div>
+      <div class="nav-label">Hábitos</div>
+    </button>
+    <button class="nav-item" onclick="irA('consejos')">
+      <div class="nav-icon">💡</div>
+      <div class="nav-label">Consejos</div>
+    </button>
+  </nav>
+
+</div>
+
+<!-- MODAL DE RECETA -->
+<div id="modal-overlay" onclick="cerrarModal(event)">
+  <div class="modal-sheet" id="modal-contenido">
+    <div class="modal-handle"></div>
+    <div id="modal-interior"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- =============================================
+     JAVASCRIPT
+     ============================================= -->
+<script>
+
+/* =============================================
+   DATOS DEL PLAN SEMANAL
+   ============================================= */
+const DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const DIAS_CORTO = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+
+const PLAN_SEMANAL = {
+  Lunes: {
+    desayuno: {
+      nombre: 'Avena con fruta y leche deslactosada',
+      desc: 'Avena cocida con banano picado y un vaso de leche deslactosada',
+      tags: ['⚡ Energía', '🥛 Calcio', '💰 Económico'],
+      ingredientes: ['½ taza de avena en hojuelas','1 vaso de leche deslactosada','1 banano maduro','1 pizca de canela (opcional)'],
+      pasos: ['Hierve el vaso de leche a fuego medio.','Agrega la avena y revuelve por 5 minutos.','Pica el banano en rodajas y ponlo encima.','Agrega la canela si te gusta. ¡Listo!'],
+      tiempo: '10 min', nivel: 'Muy fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Pechuga de pollo al limón con ensalada verde',
+      desc: 'Pechuga de pollo a la plancha con brócoli y zanahoria rallada',
+      tags: ['💪 Alta proteína', '🥗 Bajo en grasa', '❤️ Para el corazón'],
+      ingredientes: ['1 pechuga de pollo mediana','½ limón','1 taza de brócoli','1 zanahoria mediana','Aceite de oliva, sal, ajo en polvo'],
+      pasos: ['Marina la pechuga con limón, sal y ajo por 10 min.','Cocínala en sartén con unas gotas de aceite, 6 min por lado.','Cocina el brócoli al vapor 5 minutos.','Ralla la zanahoria y mezcla con el brócoli.','Sirve todo junto. ¡Queda delicioso!'],
+      tiempo: '25 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Sopa de lentejas con espinaca',
+      desc: 'Sopa caliente de lentejas con vegetales, perfecta para la noche',
+      tags: ['🫘 Proteína vegetal', '💊 Hierro', '💰 Económico'],
+      ingredientes: ['½ taza de lentejas','1 taza de espinaca fresca','1 tomate picado','¼ cebolla cabezona','1 diente de ajo','Sal y comino al gusto'],
+      pasos: ['Remoja las lentejas 30 minutos antes (o usa de lata ya cocida).','Sofríe la cebolla y el ajo con unas gotas de aceite.','Agrega el tomate y sofríe 2 minutos más.','Añade las lentejas y 2 tazas de agua. Cocina 20 min.','Agrega la espinaca al final y sirve caliente.'],
+      tiempo: '30 min', nivel: 'Fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Fruta fresca y queso fresco',
+      desc: 'Papaya picada con dos trozos de queso fresco colombiano',
+      tags: ['🍊 Vitaminas', '💰 Económico', '😊 Fácil'],
+      ingredientes: ['1 taza de papaya picada','2 trozos de queso fresco'],
+      pasos: ['Pela y pica la papaya.','Sirve con el queso fresco al lado.','¡Disfruta! 🌸'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    }
+  },
+  Martes: {
+    desayuno: {
+      nombre: 'Huevos revueltos con tomate y cebolla',
+      desc: 'Dos huevos revueltos con tomate fresco y una arepa pequeña',
+      tags: ['💪 Proteína', '🍳 Energía', '❤️ Nutritivo'],
+      ingredientes: ['2 huevos','1 tomate mediano','¼ cebolla cabezona','1 arepa pequeña (sin mantequilla)','Aceite de oliva, sal'],
+      pasos: ['Pica el tomate y la cebolla finamente.','Sofríe la cebolla 2 min con unas gotas de aceite.','Agrega el tomate y cocina 1 minuto más.','Bate los huevos, viértelosobre el sofrito y revuelve suavemente.','Sirve con la arepa calentada en la sartén.'],
+      tiempo: '12 min', nivel: 'Muy fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Filete de tilapia al ajillo con arroz integral',
+      desc: 'Tilapia a la plancha con ajo y hierbas, acompañada de arroz integral',
+      tags: ['🐟 Omega-3', '💪 Proteína', '❤️ Corazón'],
+      ingredientes: ['1 filete de tilapia','2 dientes de ajo','½ taza de arroz integral','Jugo de limón, sal, aceite de oliva','Perejil o cilantro al gusto'],
+      pasos: ['Cocina el arroz integral según las instrucciones (unos 25 min).','Salpimienta el filete y marina con limón y ajo picado.','Cocina el filete en sartén 4-5 minutos por lado.','Añade el perejil o cilantro picado al servir.','Acompaña con el arroz y una rodaja de limón.'],
+      tiempo: '30 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Crema de brócoli con queso fresco',
+      desc: 'Sopa cremosa de brócoli, suave y deliciosa para la noche',
+      tags: ['🥦 Antioxidante', '💊 Calcio', '😊 Ligero'],
+      ingredientes: ['2 tazas de brócoli','¼ cebolla','1 diente de ajo','1 taza de leche deslactosada','2 trozos de queso fresco','Sal al gusto'],
+      pasos: ['Cocina el brócoli, la cebolla y el ajo en agua hasta que ablanden.','Licúa todo con la leche deslactosada.','Devuelve al fuego y calienta a fuego bajo, revolviendo.','Ajusta la sal y sirve con el queso fresco desmenuzado encima.'],
+      tiempo: '20 min', nivel: 'Fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Manzana con mantequilla de maní',
+      desc: 'Rodajas de manzana con una cucharada de mantequilla de maní natural',
+      tags: ['🍎 Fibra', '💪 Proteína', '💰 Económico'],
+      ingredientes: ['1 manzana mediana','1 cucharada de mantequilla de maní (sin azúcar)'],
+      pasos: ['Lava bien la manzana.','Córtala en rodajas.','Úntales la mantequilla de maní. ¡Listo!'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    }
+  },
+  Miércoles: {
+    desayuno: {
+      nombre: 'Batido verde con proteína',
+      desc: 'Batido de espinaca, banano, leche y avena. ¡Nutritivo y delicioso!',
+      tags: ['🌿 Vitaminas', '💪 Proteína', '⚡ Energía'],
+      ingredientes: ['1 puñado de espinaca fresca','1 banano','1 vaso de leche deslactosada','2 cucharadas de avena','Miel al gusto (opcional)'],
+      pasos: ['Pon todos los ingredientes en la licuadora.','Licúa por 1 minuto hasta que quede suave.','Si está muy espeso, agrega un poco más de leche.','Bebe de inmediato para aprovechar los nutrientes.'],
+      tiempo: '5 min', nivel: 'Muy fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Pollo desmechado con fríjoles blancos',
+      desc: 'Pechuga de pollo desmechada con fríjoles blancos al ajillo',
+      tags: ['💪 Alta proteína', '🫘 Fibra', '💰 Económico'],
+      ingredientes: ['1 pechuga de pollo','1 taza de fríjoles blancos cocidos','2 dientes de ajo','¼ cebolla','1 tomate','Aceite de oliva, sal, comino'],
+      pasos: ['Cocina la pechuga en agua con sal hasta que esté blanda, luego desméchala.','En una sartén sofríe la cebolla y el ajo.','Agrega el tomate y los fríjoles, cocina 5 minutos.','Mezcla el pollo desmechado con los fríjoles.','Sirve caliente con una ensalada verde al lado.'],
+      tiempo: '35 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Tortilla de verduras (sin carne)',
+      desc: 'Tortilla de huevo con zucchini, pimentón y queso fresco',
+      tags: ['🥚 Proteína', '🥗 Bajo en grasa', '😊 Ligero'],
+      ingredientes: ['2 huevos','½ zucchini (zapallo italiano)','¼ pimentón','2 trozos de queso fresco','Sal, aceite de oliva'],
+      pasos: ['Pica el zucchini y el pimentón en trozos pequeños.','Sofríelos en sartén con un poco de aceite, 3-4 minutos.','Bate los huevos con sal y viértelos sobre las verduras.','Cocina a fuego bajo hasta que cuaje, volteando con cuidado.','Agrega el queso fresco encima y sirve.'],
+      tiempo: '15 min', nivel: 'Fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Guayaba con queso y nueces',
+      desc: 'Fruta colombiana fresca con queso blanco y unas nueces',
+      tags: ['🍈 Vitamina C', '💰 Económico', '😊 Fácil'],
+      ingredientes: ['2 guayabas frescas','1 trozo de queso fresco','Un puñado pequeño de nueces (maní)'],
+      pasos: ['Lava y corta las guayabas.','Sirve con el queso y el maní al lado.','¡Qué rico! 🌸'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    }
+  },
+  Jueves: {
+    desayuno: {
+      nombre: 'Yogur natural con granola casera y fruta',
+      desc: 'Yogur sin azúcar con granola de avena y frutas de temporada',
+      tags: ['🦠 Probióticos', '💪 Calcio', '🍓 Vitaminas'],
+      ingredientes: ['1 taza de yogur natural sin azúcar','3 cucharadas de avena tostada','½ taza de frutas mixtas (fresa, banano, papaya)','1 cucharadita de miel (opcional)'],
+      pasos: ['Pon el yogur en un tazón.','Agrega la avena tostada encima.','Corta y añade las frutas frescas.','Si gustas, pon un poquito de miel. ¡Listo!'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Sardinas en tomate con ensalada de pepino',
+      desc: 'Sardinas en lata (en salsa de tomate) con pepino, aguacate y limón',
+      tags: ['🐟 Omega-3', '💪 Proteína', '💰 Económico'],
+      ingredientes: ['1 lata de sardinas en salsa de tomate','1 pepino cohombro','½ aguacate pequeño','Limón, sal, cilantro al gusto'],
+      pasos: ['Abre la lata de sardinas y escurre un poco el líquido.','Pela y rebana el pepino en rodajas.','Pica el aguacate en cubos.','Mezcla el pepino y el aguacate, adereza con limón y sal.','Sirve las sardinas al lado. Espolvorea cilantro.'],
+      tiempo: '8 min', nivel: 'Sin cocción', porciones: 1
+    },
+    cena: {
+      nombre: 'Sopa de verduras con huevo pochado',
+      desc: 'Sopa casera de verduras con un huevo pochado flotando encima',
+      tags: ['🥚 Proteína', '🥕 Vitaminas', '😊 Ligero'],
+      ingredientes: ['1 zanahoria','1 papa pequeña','1 rama de apio','¼ cebolla','1 huevo','Sal, comino, cilantro'],
+      pasos: ['Pica todas las verduras en cubos pequeños.','Ponlas en una olla con 3 tazas de agua y cocina 20 minutos.','Añade sal y comino al gusto.','Rompe el huevo suavemente en la sopa caliente.','Tapa y cocina 3 minutos. Sirve con cilantro fresco.'],
+      tiempo: '25 min', nivel: 'Fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Pera con queso campesino',
+      desc: 'Una pera dulce con un trocito de queso campesino colombiano',
+      tags: ['🍐 Fibra', '💊 Calcio', '💰 Económico'],
+      ingredientes: ['1 pera mediana','1 trozo de queso campesino'],
+      pasos: ['Lava bien la pera.','Córtala en cascos.','Acompaña con el queso. ¡Disfruta!'],
+      tiempo: '3 min', nivel: 'Sin cocción', porciones: 1
+    }
+  },
+  Viernes: {
+    desayuno: {
+      nombre: 'Panqueques de avena y banano',
+      desc: 'Panqueques saludables sin harina, hechos de avena y banano',
+      tags: ['💪 Proteína', '⚡ Energía', '😊 Rico'],
+      ingredientes: ['1 banano maduro','2 huevos','4 cucharadas de avena','1 pizca de canela','Aceite de oliva para la sartén'],
+      pasos: ['Aplasta el banano con un tenedor hasta que quede puro.','Bate los huevos y mézclalos con el banano y la avena.','Calienta la sartén con unas gotas de aceite.','Vierte pequeñas porciones y cocina 2-3 min por lado.','Sirve con fruta fresca encima. ¡Quedan divinos!'],
+      tiempo: '15 min', nivel: 'Fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Pollo al curry suave con verduras',
+      desc: 'Pollo en salsa de curry suave con zanahoria y arvejas',
+      tags: ['💪 Alta proteína', '🌿 Antiinflamatorio', '❤️ Nutritivo'],
+      ingredientes: ['1 pechuga de pollo en cubos','1 zanahoria','½ taza de arvejas','¼ cebolla','1 taza de leche de coco (pequeña)','1 cucharadita de curry suave','Sal al gusto'],
+      pasos: ['Sofríe la cebolla con un poco de aceite.','Agrega el pollo en cubos y dora por 5 minutos.','Añade la zanahoria y las arvejas.','Vierte la leche de coco y el curry, revuelve bien.','Cocina a fuego bajo 15 minutos hasta que espese.'],
+      tiempo: '30 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Ensalada proteica de atún y aguacate',
+      desc: 'Atún en agua mezclado con aguacate, tomate y limón',
+      tags: ['🐟 Proteína', '🥑 Grasas buenas', '💰 Económico'],
+      ingredientes: ['1 lata de atún en agua','½ aguacate','1 tomate','¼ cebolla morada','Limón, sal, aceite de oliva, cilantro'],
+      pasos: ['Escurre bien el atún.','Pica el tomate, la cebolla y el aguacate en cubos.','Mezcla todo con el atún.','Adereza con limón, sal y un chorrito de aceite de oliva.','Espolvorea cilantro fresco. ¡Listo en minutos!'],
+      tiempo: '8 min', nivel: 'Sin cocción', porciones: 1
+    },
+    merienda: {
+      nombre: 'Maracuyá con agua y miel',
+      desc: 'Jugo natural de maracuyá con agua, sin azúcar (o con miel)',
+      tags: ['🍊 Vitamina C', '💆 Relajante', '💰 Económico'],
+      ingredientes: ['2 maracuyás maduros','2 vasos de agua','1 cucharadita de miel (opcional)'],
+      pasos: ['Corta los maracuyás y saca la pulpa.','Licúa con el agua por 30 segundos.','Cuela si prefieres sin semillas.','Agrega la miel y sirve con hielo.'],
+      tiempo: '5 min', nivel: 'Muy fácil', porciones: 1
+    }
+  },
+  Sábado: {
+    desayuno: {
+      nombre: 'Calentado saludable de domingo',
+      desc: 'Fríjoles del día anterior con huevo frito y arepa pequeña',
+      tags: ['💰 Económico', '💪 Proteína', '❤️ Colombiano'],
+      ingredientes: ['½ taza de fríjoles cocidos (del día anterior)','1 huevo','1 arepa pequeña','Sal, aceite de oliva'],
+      pasos: ['Calienta los fríjoles en una sartén pequeña.','Fríe el huevo en un poco de aceite (o cocínalo al vapor).','Calienta la arepa en la sartén sin aceite.','Sirve todo junto. ¡Tradición saludable!'],
+      tiempo: '10 min', nivel: 'Muy fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Cazuela de pollo con verduras variadas',
+      desc: 'Pollo guisado con papa, zanahoria, habichuela y yuca en porciones moderadas',
+      tags: ['💪 Alta proteína', '🥕 Vitaminas', '❤️ Casero'],
+      ingredientes: ['1 muslo de pollo sin piel','½ papa mediana','1 zanahoria','1 puñado de habichuela','¼ yuca pequeña','Cebolla, ajo, tomate, sal, comino'],
+      pasos: ['Sofríe la cebolla, ajo y tomate en la olla.','Agrega el pollo y dora por 5 min.','Añade todas las verduras picadas y cubre con agua.','Cocina a fuego medio por 30-35 minutos.','Ajusta la sazón y sirve bien caliente.'],
+      tiempo: '40 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Huevos pericos con champiñones',
+      desc: 'Huevos revueltos con champiñones y cebollita de verdeo',
+      tags: ['🥚 Proteína', '🍄 Vitaminas', '😊 Ligero'],
+      ingredientes: ['2 huevos','1 taza de champiñones','2 ramas de cebollita de verdeo','Sal, aceite de oliva, pimienta'],
+      pasos: ['Limpia y rebana los champiñones.','Sofríe la cebollita 1 minuto en la sartén.','Agrega los champiñones y cocina 3-4 min.','Bate los huevos con sal y viértelos.','Revuelve suavemente hasta que cuajen.'],
+      tiempo: '12 min', nivel: 'Muy fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Jugo de naranja natural',
+      desc: 'Naranjas exprimidas frescas, llenas de vitamina C',
+      tags: ['🍊 Vitamina C', '💊 Hierro', '💰 Económico'],
+      ingredientes: ['3 naranjas medianas','Agua al gusto (opcional)'],
+      pasos: ['Parte las naranjas por la mitad.','Expríme cada una bien.','Sirve el jugo fresco. Sin azúcar.','Bebe de inmediato para aprovechar la vitamina C.'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    }
+  },
+  Domingo: {
+    desayuno: {
+      nombre: 'Tostadas de aguacate con huevo',
+      desc: 'Pan integral con aguacate aplastado y huevo cocido encima',
+      tags: ['🥑 Grasas buenas', '💪 Proteína', '❤️ Para el corazón'],
+      ingredientes: ['2 tajadas de pan integral','½ aguacate maduro','1 huevo cocido o pochado','Sal, limón, pimienta negra'],
+      pasos: ['Tuesta el pan (en sartén o tostadora).','Aplasta el aguacate con sal y limón.','Unta el aguacate en las tostadas.','Coloca el huevo cocido encima y parte por la mitad.','Espolvorea pimienta negra. ¡Listo!'],
+      tiempo: '12 min', nivel: 'Muy fácil', porciones: 1
+    },
+    almuerzo: {
+      nombre: 'Bandeja especial de pollo y vegetales',
+      desc: 'Pollo a la plancha con fríjoles, ensalada y aguacate',
+      tags: ['💪 Alta proteína', '🥗 Balanceado', '❤️ Especial'],
+      ingredientes: ['1 pechuga de pollo','½ taza de fríjoles cocidos','½ aguacate','Ensalada verde (lechuga, tomate, pepino)','Limón, sal, aceite de oliva'],
+      pasos: ['Sazona la pechuga con sal, ajo y limón.','Cocínala en sartén 6-7 min por lado.','Calienta los fríjoles con un sofrito suave.','Prepara la ensalada con limón y aceite de oliva.','Sirve todo en el plato con el aguacate al lado.'],
+      tiempo: '25 min', nivel: 'Fácil', porciones: 1
+    },
+    cena: {
+      nombre: 'Sopa reconfortante de quinua',
+      desc: 'Sopa ligera de quinua con espinaca y zanahoria, perfecta para el domingo',
+      tags: ['🌾 Superalimento', '💪 Proteína vegetal', '😊 Ligero'],
+      ingredientes: ['¼ taza de quinua','1 taza de espinaca','1 zanahoria','¼ cebolla','1 diente de ajo','Sal, comino, cilantro'],
+      pasos: ['Lava bien la quinua bajo el agua.','Sofríe la cebolla y el ajo.','Agrega la zanahoria picada y la quinua.','Añade 3 tazas de agua y cocina 15 minutos.','Agrega la espinaca al final y sirve con cilantro.'],
+      tiempo: '25 min', nivel: 'Fácil', porciones: 1
+    },
+    merienda: {
+      nombre: 'Fresas con yogur natural',
+      desc: 'Fresas frescas con yogur natural, una merienda deliciosa y ligera',
+      tags: ['🍓 Vitamina C', '🦠 Probióticos', '💰 Económico'],
+      ingredientes: ['1 taza de fresas','½ taza de yogur natural sin azúcar','1 cucharadita de miel (opcional)'],
+      pasos: ['Lava y pica las fresas.','Pon el yogur en un tazón.','Añade las fresas y la miel.','¡Disfruta esta delicia saludable!'],
+      tiempo: '5 min', nivel: 'Sin cocción', porciones: 1
+    }
+  }
+};
+
+// Alternativas para "no me gusta"
+const ALTERNATIVAS = {
+  desayuno: [
+    { nombre: 'Colada de maicena con fruta', desc: 'Colada suave de maicena sin azúcar con banano', tags: ['💰 Económico', '😊 Suave'], ingredientes: ['3 cucharadas de maicena','1 vaso de leche deslactosada','1 banano','Canela'], pasos: ['Disuelve la maicena en un poco de leche fría.','Calienta el resto de la leche.','Agrega la maicena disuelta, revuelve hasta espesar.','Sirve con el banano picado y canela.'], tiempo: '10 min', nivel: 'Muy fácil', porciones: 1 },
+    { nombre: 'Huevo tibio con arepa integral', desc: 'Huevo cocido tibio acompañado de arepa pequeña sin mantequilla', tags: ['💪 Proteína', '⚡ Energía'], ingredientes: ['1 huevo','1 arepa integral pequeña','Sal al gusto'], pasos: ['Hierve agua en una ollita.','Agrega el huevo con cuidado y cocina 7 min.','Calienta la arepa en sartén seco.','Pela el huevo y sirve con la arepa.'], tiempo: '10 min', nivel: 'Muy fácil', porciones: 1 }
+  ],
+  almuerzo: [
+    { nombre: 'Pollo desmechado con yuca cocida', desc: 'Pechuga desmechada con yuca tierna y ensalada', tags: ['💪 Proteína', '🌿 Casero', '💰 Económico'], ingredientes: ['1 pechuga de pollo','1 trozo de yuca','Ensalada verde','Sal, ajo, comino'], pasos: ['Cocina la yuca en agua con sal hasta ablandar.','Cocina la pechuga y desméchala.','Mezcla el pollo con sofrito de tomate y cebolla.','Sirve la yuca y el pollo con ensalada al lado.'], tiempo: '30 min', nivel: 'Fácil', porciones: 1 },
+    { nombre: 'Sopa de fríjoles negros con pollo', desc: 'Caldo reconfortante de fríjoles con pollo desmenuzado', tags: ['🫘 Proteína', '💰 Económico', '❤️ Nutritivo'], ingredientes: ['½ taza de fríjoles negros','100g de pechuga','Tomate, cebolla, ajo','Sal, comino, cilantro'], pasos: ['Cocina los fríjoles con agua hasta que ablanden.','Agrega el pollo desmechado.','Sofríe el tomate, cebolla y ajo aparte y añade al caldo.','Sazona y sirve con cilantro fresco.'], tiempo: '35 min', nivel: 'Fácil', porciones: 1 }
+  ],
+  cena: [
+    { nombre: 'Crema de ahuyama suave', desc: 'Crema caliente de ahuyama con un toque de nuez moscada', tags: ['🎃 Vitamina A', '😊 Suave', '💰 Económico'], ingredientes: ['2 tazas de ahuyama picada','¼ cebolla','1 diente de ajo','½ vaso de leche deslactosada','Sal, nuez moscada'], pasos: ['Cocina la ahuyama con la cebolla y el ajo en agua.','Cuando esté blanda, licúa con la leche.','Devuelve al fuego y calienta, revolviendo.','Añade sal y una pizca de nuez moscada.'], tiempo: '20 min', nivel: 'Fácil', porciones: 1 },
+    { nombre: 'Revuelto de huevo con espinaca', desc: 'Huevos revueltos sencillos con espinaca salteada', tags: ['🥚 Proteína', '🌿 Hierro', '😊 Ligero'], ingredientes: ['2 huevos','1 puñado de espinaca','¼ cebolla','Sal, aceite de oliva'], pasos: ['Sofríe la cebolla con aceite 1 minuto.','Agrega la espinaca y cocina 2 min.','Bate los huevos con sal y viértelos.','Revuelve suavemente hasta que cuajen.'], tiempo: '8 min', nivel: 'Muy fácil', porciones: 1 }
+  ],
+  merienda: [
+    { nombre: 'Banano con maní', desc: 'Un banano con un puñado de maní tostado', tags: ['⚡ Energía', '💰 Económico', '💪 Proteína'], ingredientes: ['1 banano','1 puñado de maní tostado sin sal'], pasos: ['Pela el banano.','Come junto con el maní.','¡Así de fácil!'], tiempo: '2 min', nivel: 'Sin cocción', porciones: 1 },
+    { nombre: 'Té de hierbas con una fruta', desc: 'Un té de manzanilla o hierbabuena con fruta fresca', tags: ['💆 Relajante', '💰 Económico', '😊 Suave'], ingredientes: ['1 aromática de manzanilla o hierbabuena','1 fruta de temporada'], pasos: ['Hierve agua y agrega la aromática.','Deja reposar 5 minutos.','Acompaña con la fruta lavada.'], tiempo: '7 min', nivel: 'Sin cocción', porciones: 1 }
+  ]
+};
+
+// Lista de mercado
+const MERCADO_LISTA = {
+  'Proteínas 💪': [
+    { nombre: 'Pechuga de pollo', detalle: '3-4 unidades para la semana' },
+    { nombre: 'Huevos', detalle: '1 docena' },
+    { nombre: 'Atún en agua (lata)', detalle: '2 latas' },
+    { nombre: 'Sardinas en tomate (lata)', detalle: '2 latas' },
+    { nombre: 'Tilapia', detalle: '2 filetes frescos o congelados' },
+    { nombre: 'Lentejas', detalle: '250g (o 1 lata cocida)' },
+    { nombre: 'Fríjoles', detalle: '250g (o 2 latas cocidas)' },
+    { nombre: 'Yogur natural sin azúcar', detalle: '1 pote grande' },
+    { nombre: 'Queso fresco o campesino', detalle: '250g' },
+  ],
+  'Verduras 🥦': [
+    { nombre: 'Brócoli', detalle: '1 cabeza mediana' },
+    { nombre: 'Espinaca', detalle: '1 bolsa fresca' },
+    { nombre: 'Zanahoria', detalle: '4-5 unidades' },
+    { nombre: 'Tomate', detalle: '4-5 unidades' },
+    { nombre: 'Cebolla cabezona', detalle: '2 unidades' },
+    { nombre: 'Ajo', detalle: '1 cabeza' },
+    { nombre: 'Pepino cohombro', detalle: '2 unidades' },
+    { nombre: 'Pimentón', detalle: '1 unidad' },
+    { nombre: 'Champiñones', detalle: '200g' },
+    { nombre: 'Ahuyama', detalle: '½ unidad pequeña' },
+    { nombre: 'Habichuela', detalle: '200g' },
+  ],
+  'Frutas 🍊': [
+    { nombre: 'Banano', detalle: '1 racimo pequeño (6-8 unidades)' },
+    { nombre: 'Papaya', detalle: '½ unidad' },
+    { nombre: 'Naranja', detalle: '4-5 unidades' },
+    { nombre: 'Manzana', detalle: '4 unidades' },
+    { nombre: 'Guayaba', detalle: '4-5 unidades' },
+    { nombre: 'Fresas', detalle: '1 canastilla pequeña' },
+    { nombre: 'Pera', detalle: '3 unidades' },
+    { nombre: 'Maracuyá', detalle: '4-5 unidades' },
+    { nombre: 'Aguacate', detalle: '2-3 unidades' },
+  ],
+  'Básicos 🏪': [
+    { nombre: 'Avena en hojuelas', detalle: '500g (Quaker o similar)' },
+    { nombre: 'Arroz integral', detalle: '500g' },
+    { nombre: 'Quinua', detalle: '250g' },
+    { nombre: 'Pan integral', detalle: '1 bolsa pequeña' },
+    { nombre: 'Aceite de oliva', detalle: '1 botella pequeña' },
+    { nombre: 'Leche deslactosada', detalle: '1 litro' },
+    { nombre: 'Maicena', detalle: '250g' },
+    { nombre: 'Maní tostado sin sal', detalle: '200g' },
+    { nombre: 'Arepas integrales', detalle: '1 paquete' },
+    { nombre: 'Curry en polvo suave', detalle: '1 sobre pequeño' },
+  ]
+};
+
+// Hábitos diarios
+const HABITOS = [
+  { id: 'agua', icono: '💧', nombre: 'Tomar 8 vasos de agua', desc: 'Mantente hidratada durante todo el día' },
+  { id: 'caminar', icono: '🚶', nombre: 'Caminar 20-30 minutos', desc: 'Un paseo suave por el barrio o el patio' },
+  { id: 'frutas', icono: '🍎', nombre: 'Comer 2 frutas hoy', desc: 'Con las meriendas o entre comidas' },
+  { id: 'desayuno', icono: '🍳', nombre: 'Desayunar bien', desc: 'La comida más importante del día' },
+  { id: 'dormir', icono: '😴', nombre: 'Dormir 7-8 horas', desc: 'El descanso es clave para tu salud' },
+  { id: 'animo', icono: '🌸', nombre: 'Momento para ti', desc: 'Leer, escuchar música o algo que te guste' },
+  { id: 'medicamentos', icono: '💊', nombre: 'Tomar los medicamentos', desc: 'Si los tienes, en el horario indicado' },
+];
+
+// Mensajes del asistente
+const MENSAJES_ASISTENTE = [
+  '¡Buenos días! Hoy es un buen día para cuidarte. Recuerda tomar agua desde temprano 💧',
+  'El pollo es tu mejor amigo. Tiene mucha proteína y es muy fácil de preparar 🍗',
+  'Comer bien no tiene que ser aburrido. ¡Hoy tienes opciones deliciosas! 🌿',
+  'Cada vaso de agua que tomas es un regalo para tu cuerpo 💙',
+  'Pequeños cambios en la alimentación hacen grandes diferencias con el tiempo 🌟',
+  '¡Lo estás haciendo muy bien! Cada día cuenta en este camino 🌸',
+  'Las legumbres como los fríjoles y lentejas son económicas y muy nutritivas ❤️',
+  'El aguacate es una fruta maravillosa: llena de grasas buenas para tu corazón 🥑',
+  'Hoy recuerda salir a caminar aunque sea un ratito. ¡Hace maravillas! 🚶‍♀️',
+  'Los huevos son uno de los mejores alimentos: baratos, fáciles y llenos de proteína 🥚',
+];
+
+// Consejos de salud
+const CONSEJOS = [
+  { icono: '❤️', tipo: 'verde', titulo: 'Cuida tu corazón con alimentos ligeros', texto: 'Prefiere el aceite de oliva sobre otras grasas. Consume más pescado, pollo y legumbres. Reduce la sal y evita los alimentos fritos o muy procesados.' },
+  { icono: '🦴', tipo: 'azul', titulo: 'Fortalece tus huesos cada día', texto: 'El calcio es muy importante en esta etapa. Incluye lácteos como el yogur y el queso fresco. Toma sol 15 minutos al día (vitamina D). Caminar también fortalece los huesos.' },
+  { icono: '💧', tipo: 'azul', titulo: 'Hidrátate bien, te sentirás mejor', texto: 'Con la edad, la sensación de sed disminuye. Toma al menos 8 vasos de agua al día aunque no tengas sed. También cuentan las sopas, las aromáticas y las frutas con agua.' },
+  { icono: '🥗', tipo: 'verde', titulo: 'Las proteínas son tus aliadas', texto: 'Tu cuerpo necesita proteínas para mantener los músculos. Come pollo, huevos, pescado, lentejas o fríjoles en cada almuerzo y cena. ¡No los omitas!' },
+  { icono: '🌿', tipo: 'naranja', titulo: 'Come muchos colores cada día', texto: 'Mientras más colorido sea tu plato, mejor. Las verduras y frutas de colores distintos tienen diferentes vitaminas. Intenta tener al menos 3 colores en tu plato.' },
+  { icono: '⏰', tipo: 'amarillo', titulo: 'Los horarios de comida importan', texto: 'Trata de comer a horas similares cada día. No te saltes el desayuno. Come despacio, mastica bien y disfruta cada bocado. Cenar temprano (antes de las 7pm) ayuda a descansar mejor.' },
+  { icono: '🚶', tipo: 'verde', titulo: 'Muévete un poco cada día', texto: 'No es necesario hacer ejercicio intenso. Un caminado de 20-30 minutos al día hace maravillas para la salud del corazón, los huesos y el estado de ánimo. Empieza suave.' },
+  { icono: '😊', tipo: 'naranja', titulo: 'El bienestar emocional también es salud', texto: 'Compartir con familia, hacer cosas que te gusten y reírte son parte importante de una vida saludable. Cuídate por dentro y por fuera. ¡Te lo mereces!' },
+];
+
+// Comidas rápidas
+const COMIDAS_RAPIDAS = [
+  { icono: '🥚', nombre: 'Huevos revueltos', tiempo: '10 min' },
+  { icono: '🥗', nombre: 'Ensalada de atún', tiempo: '8 min' },
+  { icono: '🍌', nombre: 'Batido de frutas', tiempo: '5 min' },
+  { icono: '🥫', nombre: 'Sardinas con ensalada', tiempo: '8 min' },
+  { icono: '🧀', nombre: 'Fruta con queso', tiempo: '3 min' },
+  { icono: '🥛', nombre: 'Avena instantánea', tiempo: '5 min' },
+];
+
+/* =============================================
+   ESTADO DE LA APP
+   ============================================= */
+let estado = {
+  nombre: '',
+  paginaActual: 'inicio',
+  habitosCompletados: {},
+  mercadoComprado: {},
+  favoritos: [],
+  alternativasUsadas: {},
+};
+
+function cargarEstado() {
+  try {
+    const guardado = localStorage.getItem('miBienestar_estado');
+    if (guardado) {
+      const obj = JSON.parse(guardado);
+      estado = { ...estado, ...obj };
+    }
+  } catch(e) {}
+}
+
+function guardarEstado() {
+  try {
+    localStorage.setItem('miBienestar_estado', JSON.stringify(estado));
+  } catch(e) {}
+}
+
+/* =============================================
+   INICIALIZAR APP
+   ============================================= */
+function iniciarApp() {
+  const inputNombre = document.getElementById('input-nombre');
+  const nombre = inputNombre.value.trim() || 'Amiga';
+  estado.nombre = nombre;
+  guardarEstado();
+
+  document.getElementById('welcome-screen').classList.add('hidden');
+  document.getElementById('app').style.display = 'flex';
+
+  setTimeout(() => {
+    document.getElementById('welcome-screen').style.display = 'none';
+    inicializarApp();
+  }, 600);
+}
+
+function inicializarApp() {
+  // Header
+  const hora = new Date().getHours();
+  let saludo = hora < 12 ? 'Buenos días ☀️' : hora < 18 ? 'Buenas tardes 🌤️' : 'Buenas noches 🌙';
+  document.getElementById('header-saludo').textContent = saludo;
+  document.getElementById('header-nombre').textContent = estado.nombre || 'Mi Bienestar';
+
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const ahora = new Date();
+  document.getElementById('header-fecha').textContent = `${dias[ahora.getDay()]}, ${ahora.getDate()} de ${meses[ahora.getMonth()]}`;
+
+  // Asistente
+  const msj = MENSAJES_ASISTENTE[Math.floor(Math.random() * MENSAJES_ASISTENTE.length)];
+  document.getElementById('asistente-texto').textContent = msj;
+
+  // Menú de hoy
+  renderMenuHoy();
+
+  // Comidas rápidas
+  renderComidasRapidas();
+
+  // Calendario
+  renderCalendario();
+
+  // Mercado
+  renderMercado();
+
+  // Hábitos
+  renderHabitos();
+
+  // Consejos
+  renderConsejos();
+
+  // Favoritos
+  renderFavoritos();
+
+  // Animaciones después de cargar
+  setTimeout(() => {
+    actualizarProgreso();
+    animarBarras();
+  }, 300);
+}
+
+function animarBarras() {
+  document.getElementById('barra-alim').style.width = '82%';
+  const progreso = calcularProgreso();
+  const offset = 289 - (289 * progreso / 100);
+  document.getElementById('svg-progreso').style.strokeDashoffset = offset;
+  document.getElementById('progreso-num').textContent = progreso + '%';
+}
+
+/* =============================================
+   NAVEGACIÓN
+   ============================================= */
+function irA(pagina) {
+  // Ocultar todas las páginas
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  document.getElementById('page-' + pagina).classList.add('active');
+
+  // Mapeo de páginas a botones nav
+  const navMap = { inicio: 0, semana: 1, mercado: 2, habitos: 3, consejos: 4 };
+  const navItems = document.querySelectorAll('.nav-item');
+  if (navMap[pagina] !== undefined) {
+    navItems[navMap[pagina]].classList.add('active');
+  }
+
+  estado.paginaActual = pagina;
+  window.scrollTo(0, 0);
+}
+
+/* =============================================
+   MENÚ DE HOY
+   ============================================= */
+function renderMenuHoy() {
+  const diaActual = DIAS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1];
+  document.getElementById('menu-hoy-dia').textContent = `Hoy es ${DIAS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1]}`;
+
+  const diaMenu = PLAN_SEMANAL[diaActual];
+  if (!diaMenu) return;
+
+  const tipos = [
+    { key: 'desayuno', icono: '🌅', label: 'Desayuno' },
+    { key: 'merienda', icono: '🍎', label: 'Merienda' },
+    { key: 'almuerzo', icono: '☀️', label: 'Almuerzo' },
+    { key: 'cena', icono: '🌙', label: 'Cena' },
+  ];
+
+  const contenido = document.getElementById('menu-hoy-contenido');
+  contenido.innerHTML = tipos.map(t => {
+    const comida = diaMenu[t.key];
+    return `
+      <div style="padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.04);">
+        <div class="comida-tipo">${t.icono} ${t.label}</div>
+        <div class="comida-nombre" style="margin-bottom:4px;">${comida.nombre}</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-verde btn-sm" onclick="verReceta('${diaActual}','${t.key}')">
+            📋 Receta
+          </button>
+          <button class="btn btn-gris btn-sm" onclick="mostrarAlternativa('${t.key}')">
+            🔄 Cambiar
+          </button>
+          <button class="fav-btn" onclick="toggleFavorito('${diaActual}_${t.key}', '${comida.nombre}')" title="Guardar favorito">
+            ${esFavorito(diaActual + '_' + t.key) ? '❤️' : '🤍'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* =============================================
+   COMIDAS RÁPIDAS
+   ============================================= */
+function renderComidasRapidas() {
+  const grid = document.getElementById('comidas-rapidas-grid');
+  grid.innerHTML = COMIDAS_RAPIDAS.map(c => `
+    <div class="comida-rapida-item" onclick="mostrarToast('¡${c.nombre}! Una opción rápida y nutritiva 😊')">
+      <div class="comida-rapida-icono">${c.icono}</div>
+      <div class="comida-rapida-nombre">${c.nombre}</div>
+      <div class="comida-rapida-tiempo">⏱️ ${c.tiempo}</div>
+    </div>
+  `).join('');
+}
+
+/* =============================================
+   CALENDARIO SEMANAL
+   ============================================= */
+function renderCalendario() {
+  const hoy = new Date();
+  const diaHoy = hoy.getDay() === 0 ? 6 : hoy.getDay() - 1;
+
+  const cal = document.getElementById('calendario-semana');
+  cal.innerHTML = DIAS.map((dia, idx) => {
+    const esHoy = idx === diaHoy;
+    const diaMenu = PLAN_SEMANAL[dia];
+    const fecha = new Date(hoy);
+    fecha.setDate(hoy.getDate() - diaHoy + idx);
+    const numDia = fecha.getDate();
+
+    return `
+      <div class="dia-card ${esHoy ? 'bounce-in' : ''}" style="${esHoy ? 'border:2px solid var(--verde);' : ''}">
+        <div class="dia-header" onclick="toggleDia('dia-${idx}')">
+          <div class="dia-info">
+            <div class="dia-numero" style="${esHoy ? 'background:var(--verde);color:#fff;' : ''}">
+              ${numDia}
+              <span>${DIAS_CORTO[idx]}</span>
+            </div>
+            <div>
+              <div class="dia-titulo">${dia} ${esHoy ? '– <span style="color:var(--verde);font-size:0.85rem;">Hoy</span>' : ''}</div>
+              <div class="dia-resumen">
+                ${diaMenu.desayuno.nombre.split(' ').slice(0,3).join(' ')}... · ${diaMenu.almuerzo.nombre.split(' ').slice(0,3).join(' ')}...
+              </div>
+            </div>
+          </div>
+          <div class="dia-toggle" id="toggle-${idx}">▼</div>
+        </div>
+        <div class="dia-contenido ${esHoy ? 'visible' : ''}" id="dia-${idx}">
+          ${renderComidasDia(dia, diaMenu)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderComidasDia(dia, diaMenu) {
+  const tipos = [
+    { key: 'desayuno', icono: '🌅', label: 'Desayuno' },
+    { key: 'merienda', icono: '🍎', label: 'Merienda' },
+    { key: 'almuerzo', icono: '☀️', label: 'Almuerzo' },
+    { key: 'cena', icono: '🌙', label: 'Cena' },
+  ];
+
+  return tipos.map(t => {
+    const comida = diaMenu[t.key];
+    return `
+      <div class="comida-slot" id="slot-${dia}-${t.key}">
+        <div class="comida-tipo">${t.icono} ${t.label}</div>
+        <div class="comida-nombre">${comida.nombre}</div>
+        <div class="comida-desc">${comida.desc}</div>
+        <div class="comida-tags">
+          ${comida.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        <div class="comida-acciones">
+          <button class="btn btn-verde btn-sm" onclick="verReceta('${dia}','${t.key}')">📋 Ver receta</button>
+          <button class="btn btn-naranja btn-sm" onclick="mostrarAlternativa('${t.key}')">😕 No me gusta</button>
+          <button class="fav-btn" onclick="toggleFavorito('${dia}_${t.key}', '${comida.nombre.replace(/'/g,"\'")}')" >
+            ${esFavorito(dia + '_' + t.key) ? '❤️' : '🤍'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleDia(id) {
+  const contenido = document.getElementById(id);
+  const idx = id.replace('dia-', '');
+  const toggle = document.getElementById('toggle-' + idx);
+
+  if (contenido.classList.contains('visible')) {
+    contenido.classList.remove('visible');
+    toggle.classList.remove('abierto');
+  } else {
+    contenido.classList.add('visible');
+    toggle.classList.add('abierto');
+  }
+}
+
+/* =============================================
+   VER RECETA
+   ============================================= */
+function verReceta(dia, tipo) {
+  const comida = PLAN_SEMANAL[dia][tipo];
+  if (!comida) return;
+
+  const tipoLabel = { desayuno: '🌅 Desayuno', almuerzo: '☀️ Almuerzo', cena: '🌙 Cena', merienda: '🍎 Merienda' }[tipo] || tipo;
+
+  document.getElementById('modal-interior').innerHTML = `
+    <div class="modal-tipo">${tipoLabel}</div>
+    <h2 class="modal-titulo">${comida.nombre}</h2>
+    <p style="color:var(--gris-medio); font-size:0.95rem; margin-bottom:16px; line-height:1.5;">${comida.desc}</p>
+
+    <div class="receta-info-grid">
+      <div class="receta-info-item">
+        <div class="icon">⏱️</div>
+        <div class="label">Tiempo</div>
+        <div class="valor">${comida.tiempo}</div>
+      </div>
+      <div class="receta-info-item">
+        <div class="icon">👩‍🍳</div>
+        <div class="label">Nivel</div>
+        <div class="valor">${comida.nivel}</div>
+      </div>
+      <div class="receta-info-item">
+        <div class="icon">🍽️</div>
+        <div class="label">Para</div>
+        <div class="valor">${comida.porciones} persona</div>
+      </div>
+    </div>
+
+    <div class="receta-seccion">
+      <div class="receta-seccion-titulo">🛒 Ingredientes</div>
+      ${comida.ingredientes.map(ing => `
+        <div class="ingrediente-item">
+          <span>✅</span>
+          <span>${ing}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="receta-seccion">
+      <div class="receta-seccion-titulo">👩‍🍳 Preparación</div>
+      ${comida.pasos.map((paso, i) => `
+        <div class="paso-item">
+          <div class="paso-num">${i + 1}</div>
+          <div class="paso-texto">${paso}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="background:var(--verde-claro); border-radius:14px; padding:14px; margin-top:8px;">
+      <div style="font-size:0.9rem; color:var(--verde-oscuro); font-weight:600;">💡 Consejo de cocina</div>
+      <div style="font-size:0.88rem; color:#4a6a5a; margin-top:4px; line-height:1.5;">Puedes preparar esta receta con anticipación para ahorrar tiempo. Guarda en la nevera hasta por 2 días.</div>
+    </div>
+
+    <button class="btn btn-verde btn-full" style="margin-top:20px;" onclick="cerrarModalBtn()">
+      ✅ ¡Listo, gracias!
+    </button>
+  `;
+
+  document.getElementById('modal-overlay').classList.add('visible');
+}
+
+function cerrarModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('visible');
+  }
+}
+
+function cerrarModalBtn() {
+  document.getElementById('modal-overlay').classList.remove('visible');
+}
+
+/* =============================================
+   ALTERNATIVAS
+   ============================================= */
+function mostrarAlternativa(tipo) {
+  const alternativas = ALTERNATIVAS[tipo];
+  if (!alternativas || alternativas.length === 0) {
+    mostrarToast('No encontramos alternativas para este momento 😊');
+    return;
+  }
+
+  const idx = Math.floor(Math.random() * alternativas.length);
+  const alt = alternativas[idx];
+
+  document.getElementById('modal-interior').innerHTML = `
+    <div class="modal-tipo">🔄 Alternativa sugerida</div>
+    <h2 class="modal-titulo">${alt.nombre}</h2>
+    <p style="color:var(--gris-medio); font-size:0.95rem; margin-bottom:16px;">${alt.desc}</p>
+
+    <div class="comida-tags" style="margin-bottom:16px;">
+      ${alt.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+    </div>
+
+    <div class="receta-info-grid">
+      <div class="receta-info-item">
+        <div class="icon">⏱️</div>
+        <div class="label">Tiempo</div>
+        <div class="valor">${alt.tiempo}</div>
+      </div>
+      <div class="receta-info-item">
+        <div class="icon">👩‍🍳</div>
+        <div class="label">Nivel</div>
+        <div class="valor">${alt.nivel}</div>
+      </div>
+      <div class="receta-info-item">
+        <div class="icon">💰</div>
+        <div class="label">Costo</div>
+        <div class="valor">Bajo</div>
+      </div>
+    </div>
+
+    <div class="receta-seccion">
+      <div class="receta-seccion-titulo">🛒 Ingredientes</div>
+      ${alt.ingredientes.map(ing => `<div class="ingrediente-item"><span>✅</span><span>${ing}</span></div>`).join('')}
+    </div>
+
+    <div class="receta-seccion">
+      <div class="receta-seccion-titulo">👩‍🍳 Preparación</div>
+      ${alt.pasos.map((p, i) => `<div class="paso-item"><div class="paso-num">${i+1}</div><div class="paso-texto">${p}</div></div>`).join('')}
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="btn btn-verde" style="flex:1;" onclick="cerrarModalBtn()">👍 ¡Esta sí!</button>
+      <button class="btn btn-gris" style="flex:1;" onclick="mostrarAlternativa('${tipo}'); ">🔄 Otra opción</button>
+    </div>
+  `;
+
+  document.getElementById('modal-overlay').classList.add('visible');
+}
+
+/* =============================================
+   LISTA DE MERCADO
+   ============================================= */
+function renderMercado() {
+  const contenido = document.getElementById('mercado-contenido');
+  let total = 0, comprados = 0;
+
+  contenido.innerHTML = Object.entries(MERCADO_LISTA).map(([cat, items]) => {
+    total += items.length;
+    return `
+      <div class="mercado-categoria">
+        <div class="categoria-titulo">${cat}</div>
+        ${items.map((item, idx) => {
+          const id = `${cat}_${idx}`;
+          const comprado = estado.mercadoComprado[id];
+          if (comprado) comprados++;
+          return `
+            <div class="mercado-item ${comprado ? 'comprado' : ''}" id="mercado-${id}" onclick="toggleMercado('${id.replace(/'/g,"\\'")}', this)">
+              <div class="mercado-check">${comprado ? '✓' : ''}</div>
+              <div>
+                <div class="mercado-nombre">${item.nombre}</div>
+                <div class="mercado-detalle">${item.detalle}</div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }).join('');
+
+  actualizarProgresoMercado(comprados, total);
+}
+
+function toggleMercado(id, el) {
+  const comprado = !estado.mercadoComprado[id];
+  estado.mercadoComprado[id] = comprado;
+  guardarEstado();
+
+  el.classList.toggle('comprado', comprado);
+  el.querySelector('.mercado-check').textContent = comprado ? '✓' : '';
+
+  mostrarToast(comprado ? '✅ ¡Marcado!' : '↩️ Desmarcado');
+
+  // Recalcular progreso
+  let total = 0, comprados = 0;
+  Object.values(MERCADO_LISTA).forEach(items => total += items.length);
+  comprados = Object.values(estado.mercadoComprado).filter(v => v).length;
+  actualizarProgresoMercado(comprados, total);
+}
+
+function actualizarProgresoMercado(c, t) {
+  document.getElementById('mercado-progreso').textContent = `${c} de ${t} artículos marcados`;
+}
+
+function limpiarMercado() {
+  estado.mercadoComprado = {};
+  guardarEstado();
+  renderMercado();
+  mostrarToast('🔄 Lista reiniciada');
+}
+
+/* =============================================
+   HÁBITOS
+   ============================================= */
+function renderHabitos() {
+  const lista = document.getElementById('habitos-lista');
+  lista.innerHTML = HABITOS.map(h => {
+    const completado = estado.habitosCompletados[h.id];
+    return `
+      <div class="habito-item ${completado ? 'completado' : ''}" id="habito-${h.id}" onclick="toggleHabito('${h.id}', this)">
+        <div class="habito-icono">${h.icono}</div>
+        <div class="habito-info">
+          <div class="habito-nombre">${h.nombre}</div>
+          <div class="habito-desc">${h.desc}</div>
+        </div>
+        <div class="habito-check">${completado ? '✓' : ''}</div>
+      </div>
+    `;
+  }).join('');
+
+  actualizarProgreso();
+}
+
+function toggleHabito(id, el) {
+  const completado = !estado.habitosCompletados[id];
+  estado.habitosCompletados[id] = completado;
+  guardarEstado();
+
+  el.classList.toggle('completado', completado);
+  el.querySelector('.habito-check').textContent = completado ? '✓' : '';
+
+  if (completado) {
+    mostrarToast('¡Excelente! 🌟 Sigue así');
+  }
+
+  actualizarProgreso();
+
+  // Actualizar indicadores en dashboard
+  if (id === 'agua') document.getElementById('ind-agua').textContent = completado ? 'Completado ✅' : 'Pendiente';
+  if (id === 'caminar') document.getElementById('ind-caminar').textContent = completado ? 'Completado ✅' : 'Pendiente';
+}
+
+function calcularProgreso() {
+  const total = HABITOS.length;
+  const completados = Object.values(estado.habitosCompletados).filter(v => v).length;
+  return Math.round((completados / total) * 100);
+}
+
+function actualizarProgreso() {
+  const progreso = calcularProgreso();
+  const offset = 289 - (289 * progreso / 100);
+  const svgEl = document.getElementById('svg-progreso');
+  if (svgEl) svgEl.style.strokeDashoffset = offset;
+  const numEl = document.getElementById('progreso-num');
+  if (numEl) numEl.textContent = progreso + '%';
+
+  // Mensaje de progreso en hábitos
+  const completados = Object.values(estado.habitosCompletados).filter(v => v).length;
+  const total = HABITOS.length;
+  const emojiEl = document.getElementById('habitos-emoji-progreso');
+  const mensajeEl = document.getElementById('habitos-mensaje-progreso');
+  const subEl = document.getElementById('progreso-sub');
+
+  if (emojiEl && mensajeEl) {
+    if (completados === 0) {
+      emojiEl.textContent = '😊';
+      mensajeEl.textContent = '¡Empieza completando tus hábitos!';
+    } else if (completados <= 2) {
+      emojiEl.textContent = '🌱';
+      mensajeEl.textContent = '¡Buen comienzo! Sigue adelante';
+    } else if (completados <= 4) {
+      emojiEl.textContent = '⭐';
+      mensajeEl.textContent = '¡Muy bien! Vas por el camino correcto';
+    } else if (completados <= 6) {
+      emojiEl.textContent = '🌟';
+      mensajeEl.textContent = '¡Increíble! Casi completas todos';
+    } else {
+      emojiEl.textContent = '🏆';
+      mensajeEl.textContent = '¡FELICITACIONES! ¡Completaste todos los hábitos hoy! 🎉';
+    }
+  }
+
+  if (subEl) {
+    subEl.textContent = completados === total
+      ? '¡Completaste todos tus hábitos hoy! 🎉'
+      : `${completados} de ${total} hábitos completados`;
+  }
+}
+
+/* =============================================
+   CONSEJOS
+   ============================================= */
+function renderConsejos() {
+  const contenido = document.getElementById('consejos-contenido');
+  contenido.innerHTML = CONSEJOS.map(c => `
+    <div class="consejo-card ${c.tipo}">
+      <div class="consejo-icono">${c.icono}</div>
+      <div class="consejo-titulo">${c.titulo}</div>
+      <div class="consejo-texto">${c.texto}</div>
+    </div>
+  `).join('');
+}
+
+/* =============================================
+   FAVORITOS
+   ============================================= */
+function esFavorito(id) {
+  return estado.favoritos.includes(id);
+}
+
+function toggleFavorito(id, nombre) {
+  const idx = estado.favoritos.indexOf(id);
+  if (idx === -1) {
+    estado.favoritos.push(id);
+    mostrarToast('❤️ Guardado en favoritos');
+  } else {
+    estado.favoritos.splice(idx, 1);
+    mostrarToast('🤍 Eliminado de favoritos');
+  }
+  guardarEstado();
+  renderFavoritos();
+  renderMenuHoy();
+}
+
+function renderFavoritos() {
+  const tituloEl = document.getElementById('fav-titulo');
+  const listaEl = document.getElementById('favoritos-lista');
+
+  if (estado.favoritos.length === 0) {
+    tituloEl.style.display = 'none';
+    listaEl.innerHTML = '';
+    return;
+  }
+
+  tituloEl.style.display = 'flex';
+  listaEl.innerHTML = estado.favoritos.map(id => {
+    const partes = id.split('_');
+    const dia = partes[0];
+    const tipo = partes[1];
+    const comida = PLAN_SEMANAL[dia] && PLAN_SEMANAL[dia][tipo];
+    if (!comida) return '';
+    return `
+      <div class="card" style="padding:14px 18px;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div class="comida-tipo">❤️ ${dia} · ${tipo}</div>
+            <div class="comida-nombre">${comida.nombre}</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-verde btn-sm" onclick="verReceta('${dia}','${tipo}')">📋</button>
+            <button class="fav-btn" onclick="toggleFavorito('${id}','${comida.nombre}')">❤️</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).filter(Boolean).join('');
+}
+
+/* =============================================
+   TOAST
+   ============================================= */
+let toastTimer;
+function mostrarToast(mensaje) {
+  const toast = document.getElementById('toast');
+  toast.textContent = mensaje;
+  toast.classList.add('visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('visible'), 2500);
+}
+
+/* =============================================
+   CONFIGURACIÓN
+   ============================================= */
+function toggleLetraGrande() {
+  const btn = document.getElementById('toggle-letra');
+  btn.classList.toggle('on');
+  const grande = btn.classList.contains('on');
+  document.documentElement.style.fontSize = grande ? '18px' : '16px';
+}
+
+function resetearApp() {
+  if (confirm('¿Segura que quieres empezar de nuevo? Se perderá tu progreso.')) {
+    localStorage.removeItem('miBienestar_estado');
+    location.reload();
+  }
+}
+
+/* =============================================
+   INICIALIZACIÓN AL CARGAR
+   ============================================= */
+window.addEventListener('load', () => {
+  cargarEstado();
+
+  if (estado.nombre) {
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    inicializarApp();
+  }
+});
+
+</script>
+</body>
+</html>
